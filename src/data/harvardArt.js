@@ -37,7 +37,7 @@ const harvardArt = {
      "id": 148465,
      "verificationleveldescription": "Good. Object is well described and information is vetted",
      "period": "Neolithic period, Majiayao culture, c. 3300-2000 BCE",
-     "images": [
+     "ima ges": [
       {
        "date": "2002-11-08",
        "copyright": "President and Fellows of Harvard College",
