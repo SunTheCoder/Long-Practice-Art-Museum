@@ -4,7 +4,7 @@ import harvardArt from './data/harvardArt';
 import GalleryNavigation from './components/GalleryNavigation';
 import GalleryView from './components/GalleryView';
 import ArtDescription from './components/ArtDescription';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet, useRouteError, isRouteErrorResponse } from 'react-router-dom';
 
 console.log(harvardArt);
 
@@ -21,9 +21,17 @@ function Layout() {
   );
 }
 
+function PageMissing() {
+  const error = useRouteError();
+  if (isRouteErrorResponse(error))
+    console.log(`${error.status} ${error.statusText} ${error.data}`);
+  return <h2>Page Not Found</h2>;
+}
+
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    errorElement: <PageMissing />,
     children: [
       { 
         path: "/",
@@ -40,6 +48,7 @@ const router = createBrowserRouter([
       { 
        
         path: "galleries/:galleryId",
+        errorElement: <PageMissing />,
         children: [
           {
             index: true,
@@ -49,13 +58,17 @@ const router = createBrowserRouter([
           {
             path: "art/:artId",
             element: <ArtDescription galleries={harvardArt.records}/>
+          },
+          {
+            path: "*",
+            element: <PageMissing />
           }
         ]       
       },
-      { 
-        path: "*",
-        element: <>Page Not Found</>
-      }
+      // { 
+      //   path: "*",
+      //   element: <>Page Not Found</>
+      // }
     ]
   }
 ]);
